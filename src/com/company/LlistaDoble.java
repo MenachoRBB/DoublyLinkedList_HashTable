@@ -60,4 +60,13 @@ public class LlistaDoble {
             }
         }
     }
+
+    public void listar(){
+        Node actual =  primer;
+        System.out.println("Listar desde el primer");
+        while(actual.getSeg() != null){
+            System.out.println(actual.getElem1()+"--"+actual.getElem2());
+            actual = actual.getSeg();
+        }
+    }
 }
