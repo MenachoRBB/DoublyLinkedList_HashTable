@@ -1,48 +1,38 @@
 package com.company;
 
-public class Node {
-    private int elem1;
-    private int elem2;
-    private Node seg;
-    private Node ant;
+public class Node<T> {
+    private T data;
+    private Node<T> next;
+    private Node<T> bef;
 
-    public Node(int elem1, int elem2, Node seg, Node ant){
-        this.elem1 =  elem1;
-        this.elem2 = elem2;
-        this.seg = seg;
-        this.ant = ant;
+    public Node(T data, Node<T> next, Node<T> bef){
+        this.data =  data;
+        this.next = next;
+        this.bef = bef;
     }
 
-    public int getElem1(){
-        return elem1;
+    public T getData(){
+        return data;
     }
 
-    public int getElem2(){
-        return elem2;
+    public Node<T> getNext(){
+        return next;
     }
 
-    public Node getSeg(){
-        return seg;
+    public Node<T> getBef(){
+        return bef;
     }
 
-    public Node getAnt(){
-        return ant;
+    public void setData(T d){
+        data = d;
     }
 
-    public void setElem1(int e){
-        elem1 = e;
+    public void setSeg(Node<T> n){
+        next = n;
     }
 
-    public void setElem2(int e){
-        elem2 = e;
-    }
-
-    public void setSeg(Node n){
-        seg = n;
-    }
-
-    public void setAnt(Node n){
-        ant = n;
+    public void setAnt(Node<T> n){
+        bef = n;
     }
 
 
