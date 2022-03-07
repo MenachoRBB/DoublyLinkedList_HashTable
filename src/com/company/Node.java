@@ -3,12 +3,12 @@ package com.company;
 public class Node<T> {
     private T data;
     private Node<T> next;
-    private Node<T> bef;
+    private Node<T> prev;
 
     public Node(T data){
         this.data =  data;
         this.next = null;
-        this.bef = null;
+        this.prev = null;
     }
 
     public T getData(){
@@ -19,18 +19,18 @@ public class Node<T> {
         return next;
     }
 
-    public Node<T> getBef(){
-        return bef;
+    public Node<T> getPrev(){
+        return prev;
     }
 
     public void setData(T d){
         data = d;
     }
 
-    public void setSeg(Node<T> n){ next = n; }
+    public void setNext(Node<T> n){ next = n; }
 
-    public void setAnt(Node<T> n){
-        bef = n;
+    public void setPrev(Node<T> n){
+        prev = n;
     }
 
 

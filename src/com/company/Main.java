@@ -3,10 +3,12 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-	    LlistaDoble<Integer> llista = new LlistaDoble();
+	    LlistaDoble<Integer> list = new LlistaDoble();
 
-        llista.addFirst(1);
+        list.addNode(1);
+        list.addNode(2);
+        list.addNode(3);
 
-        llista.listar();
+        list.showAll();
     }
 }
