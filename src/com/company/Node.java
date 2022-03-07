@@ -5,10 +5,10 @@ public class Node<T> {
     private Node<T> next;
     private Node<T> bef;
 
-    public Node(T data, Node<T> next, Node<T> bef){
+    public Node(T data){
         this.data =  data;
-        this.next = next;
-        this.bef = bef;
+        this.next = null;
+        this.bef = null;
     }
 
     public T getData(){
@@ -27,9 +27,7 @@ public class Node<T> {
         data = d;
     }
 
-    public void setSeg(Node<T> n){
-        next = n;
-    }
+    public void setSeg(Node<T> n){ next = n; }
 
     public void setAnt(Node<T> n){
         bef = n;
