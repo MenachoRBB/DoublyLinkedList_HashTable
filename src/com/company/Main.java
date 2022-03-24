@@ -17,5 +17,13 @@ public class Main {
         System.out.println("Length of the list: "+list.listLength());
 
         System.out.println("Posicion 3 de la lista: "+list.getNode(3));
+
+        System.out.println("Borramos la posicion 3 de la lista");
+        list.deleteNode(3);
+        list.showAll();
+        System.out.println("Posicion 3 de la lista acutal: "+list.getNode(3));//5000
+        System.out.println("Length of the current list: "+list.listLength());//4
+
+
     }
 }

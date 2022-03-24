@@ -85,6 +85,30 @@ public class LlistaDoble<T> {
         return nElem;
     }
 
+    //Delete a node at specific position
+    public void deleteNode(int pos){
+        if(head == null || pos < 1)
+            System.out.println("The list is empty or the position is invalid");
+        Node aux = head;
+        int cont = 1;
+
+        if(head == null)
+            System.out.println("The list is empty");
+        else{
+            while(cont <= pos){
+                if(cont == pos){
+                    aux.getPrev().setNext(aux.getNext());
+                    aux.getNext().setPrev(aux.getPrev());
+                    aux = null;
+                }
+                cont++;
+                aux = aux.getNext();
+            }
+            nElem--;
+        }
+
+    }
+
     //Show all elements from the doubly linked list
     public void showAll(){
         Node aux = head;
