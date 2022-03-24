@@ -3,14 +3,19 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-	    LlistaDoble<Integer> list = new LlistaDoble();
+	    DoublyLinkedList<Integer> list = new DoublyLinkedList();
 
         list.addNode(23);
         list.addNode(100);
         list.addNode(90);
 
-        list.addNodePos(3, 5000);
-        list.addNodePos(3, 4000);
+        try {
+            list.addNodePos(3, 5000);
+            list.addNodePos(3, 4000);
+        }catch(PersonalException e){
+            System.err.println(e);
+            System.exit(1);
+        }
 
         list.showAll();
 

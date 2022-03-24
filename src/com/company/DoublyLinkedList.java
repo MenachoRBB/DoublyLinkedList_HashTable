@@ -1,12 +1,12 @@
 package com.company;
 
-public class LlistaDoble<T> {
-    private Node tail;
-    private Node head;
+public class DoublyLinkedList<T> {
+    private Node<T> tail;
+    private Node<T> head;
     private int nElem;
 
     //Constructor
-    public LlistaDoble(){
+    public DoublyLinkedList(){
         head =  null;
         tail = null;
         nElem = 0;
@@ -15,7 +15,7 @@ public class LlistaDoble<T> {
 
     //Add node at the end of the list
     public void addNode(T data){
-        Node temp = new Node<T>(data);
+        Node<T> temp = new Node<>(data);
         if(this.head == null){
             head = temp;
             tail = temp;
@@ -30,21 +30,23 @@ public class LlistaDoble<T> {
         nElem++;
     }
 
-    //Add node in a determined position
-    public void addNodePos(int pos, T data){
-        Node newNode = new Node(data);
+    //Add node at a given position
+    public void addNodePos(int pos, T data) throws PersonalException {
+        Node<T> newNode = new Node<>(data);
         newNode.setNext(null);
         newNode.setPrev(null);
 
-        if(pos < 1)
-            System.out.println("Couldn't add the node in this position");
+        if(pos < 1) {
+            throw new PersonalException("Couldn't add the node in this position");
+        }
+        else if(pos > nElem)
+            throw new PersonalException("Couldn't add the node in this position");
         else if(pos == 1){
             newNode.setNext(head);
             head.setPrev(newNode);
             head = newNode;
         }else{
-            Node temp = new Node(null);
-            temp = head;
+            Node<T> temp = head;
             for(int i = 1; i < pos-1; i++) {
                 if (temp != null)
                     temp = temp.getNext();
@@ -64,7 +66,7 @@ public class LlistaDoble<T> {
 
     //Return the data of the node of a specific position
     public T getNode(int pos) {
-        Node aux = head;
+        Node<T> aux = head;
         int cont = 1;
         T data = null;
         if(head == null)
@@ -72,7 +74,7 @@ public class LlistaDoble<T> {
         else{
             while(cont <= pos){
                 if(cont == pos)
-                    data = (T)(aux).getData();
+                    data = aux.getData();
                 cont++;
                 aux = aux.getNext();
             }
@@ -86,9 +88,9 @@ public class LlistaDoble<T> {
     }
 
     //2 functions for delete a node and delete the node at given position
-    private Node deleteNode(Node del){
+    private void deleteNode(Node<T> del){
         if(head == null || del == null)
-            return null;
+            System.out.println("test");
         if(head == del)
             head = del.getNext();
         if(del.getNext() != null)
@@ -98,14 +100,13 @@ public class LlistaDoble<T> {
             del.getPrev().setNext(del.getNext());
 
         del = null;
-        return head;
     }
 
     public void deleteNodeAtGivenPos(int pos){
         if(head == null || pos <= 0)
             return;
 
-        Node current = head;
+        Node<T> current = head;
 
         for(int i = 1; current != null && i < pos; i++)
             current = current.getNext();
@@ -116,10 +117,12 @@ public class LlistaDoble<T> {
         deleteNode(current);
         nElem--;
     }
+    //TODO
+    //public int search(T data)
 
     //Show all elements from the doubly linked list
     public void showAll(){
-        Node aux = head;
+        Node<T> aux = head;
         if(head == null)
             System.out.println("The list is empty");
         else{
