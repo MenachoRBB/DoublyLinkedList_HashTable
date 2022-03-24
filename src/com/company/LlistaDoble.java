@@ -85,28 +85,36 @@ public class LlistaDoble<T> {
         return nElem;
     }
 
-    //Delete a node at specific position
-    public void deleteNode(int pos){
-        if(head == null || pos < 1)
-            System.out.println("The list is empty or the position is invalid");
-        Node aux = head;
-        int cont = 1;
+    //2 functions for delete a node and delete the node at given position
+    private Node deleteNode(Node del){
+        if(head == null || del == null)
+            return null;
+        if(head == del)
+            head = del.getNext();
+        if(del.getNext() != null)
+            del.getNext().setPrev(del.getPrev());
 
-        if(head == null)
-            System.out.println("The list is empty");
-        else{
-            while(cont <= pos){
-                if(cont == pos){
-                    aux.getPrev().setNext(aux.getNext());
-                    aux.getNext().setPrev(aux.getPrev());
-                    aux = null;
-                }
-                cont++;
-                aux = aux.getNext();
-            }
-            nElem--;
-        }
+        if(del.getPrev() != null)
+            del.getPrev().setNext(del.getNext());
 
+        del = null;
+        return head;
+    }
+
+    public void deleteNodeAtGivenPos(int pos){
+        if(head == null || pos <= 0)
+            return;
+
+        Node current = head;
+
+        for(int i = 1; current != null && i < pos; i++)
+            current = current.getNext();
+
+        if(current == null)
+            return;
+
+        deleteNode(current);
+        nElem--;
     }
 
     //Show all elements from the doubly linked list
