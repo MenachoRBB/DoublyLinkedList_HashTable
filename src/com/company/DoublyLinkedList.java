@@ -117,8 +117,25 @@ public class DoublyLinkedList<T> {
         deleteNode(current);
         nElem--;
     }
-    //TODO
-    //public int search(T data)
+
+    public int search(T data) {
+        int count = 0;
+        Node<T> aux = head;
+        if(head == null){
+            System.out.println("The list is empty");
+            count = 0;
+        }else{
+            while(aux != null){
+                if(aux.getData() == data){
+                    return count + 1; //Giving last operation
+                }else{
+                    count++;
+                    aux = aux.getNext();
+                }
+            }
+        }
+        return count;
+    }
 
     //Show all elements from the doubly linked list
     public void showAll(){
