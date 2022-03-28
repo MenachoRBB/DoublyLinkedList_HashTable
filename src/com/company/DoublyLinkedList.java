@@ -40,12 +40,14 @@ public class DoublyLinkedList<T> {
             throw new PersonalException("Couldn't add the node in this position");
         }
         else if(pos > nElem)
-            throw new PersonalException("Couldn't add the node in this position");
+            throw new PersonalException("Invalid position");
         else if(pos == 1){
             newNode.setNext(head);
             head.setPrev(newNode);
             head = newNode;
-        }else{
+        }else if(pos < 1)
+            throw new PersonalException("Invalid position");
+        else{
             Node<T> temp = head;
             for(int i = 1; i < pos-1; i++) {
                 if (temp != null)
@@ -65,12 +67,16 @@ public class DoublyLinkedList<T> {
     }
 
     //Return the data of the node of a specific position
-    public T getNode(int pos) {
+    public T getNode(int pos) throws PersonalException{
         Node<T> aux = head;
         int cont = 1;
         T data = null;
         if(head == null)
-            System.out.println("The list is empty");
+            throw new PersonalException("The list is empty");
+        else if(pos < 1)
+            throw new PersonalException("Invalid postion");
+        else if(pos > nElem)
+            throw new PersonalException("Invalid postition");
         else{
             while(cont <= pos){
                 if(cont == pos)
@@ -102,9 +108,9 @@ public class DoublyLinkedList<T> {
         del = null;
     }
 
-    public void deleteNodeAtGivenPos(int pos){
-        if(head == null || pos <= 0)
-            return;
+    public void deleteNodeAtGivenPos(int pos) throws PersonalException{
+        if(head == null || pos <= 0 || pos > nElem)
+            throw new PersonalException("Couldn't delete that node");
 
         Node<T> current = head;
 
@@ -118,17 +124,20 @@ public class DoublyLinkedList<T> {
         nElem--;
     }
 
-    public int search(T data) {
-        int count = 0;
+    //Function to search a node with the given data
+    public int search(T data) throws PersonalException{
+        int count = 1;
         Node<T> aux = head;
         if(head == null){
-            System.out.println("The list is empty");
             count = 0;
+            throw new PersonalException("The list is empty");
         }else{
             while(aux != null){
                 if(aux.getData() == data){
-                    return count + 1; //Giving last operation
-                }else{
+                    return count;
+                }else if(count == nElem)
+                    throw new PersonalException("Node with the given data not found");
+                else{
                     count++;
                     aux = aux.getNext();
                 }

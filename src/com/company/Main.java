@@ -14,8 +14,11 @@ public class Main {
 
 
         System.out.println("Buscamos el nodo que contiene el numero 100");
-        System.out.println("Para llegar al nodo que tiene 100 hemos iterado "+list.search(100)+" veces");
-
+        try {
+            System.out.println("Para llegar al nodo que tiene 100 hemos iterado " + list.search(100) + " veces");
+        }catch (PersonalException e){
+            System.err.println(e);
+        }
 
     }
 }
