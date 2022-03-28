@@ -154,7 +154,7 @@ public class DoublyLinkedList<T> {
         else{
             System.out.println("List of nodes:");
             while(aux != null){
-                System.out.println(aux.getData());
+                System.out.println(aux.getData().toString());
                 aux = aux.getNext();
             }
         }
