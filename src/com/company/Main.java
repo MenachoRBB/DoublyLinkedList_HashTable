@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Iterator;
+
 public class Main {
 
     public static void main(String[] args) throws PersonalException {
@@ -17,12 +19,11 @@ public class Main {
         list.addNode(test3);
         list.addNode(test4);
         list.addNode(test5);
-        list.showAll();
+        //list.showAll();
 
-        try{
-            System.out.println(list.search(test6));
-        }catch(PersonalException e){
-            System.err.println(e);
+        Iterator<Ciutada> i =list.iterator();
+        while(i.hasNext()){
+            System.out.println(i.next());
         }
 
 

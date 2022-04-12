@@ -1,6 +1,7 @@
 package com.company;
+import java.util.Iterator;
 
-public class DoublyLinkedList<T> {
+public class DoublyLinkedList<T> implements Iterable<T>{
     private Node<T> tail;
     private Node<T> head;
     private int nElem;
@@ -158,5 +159,11 @@ public class DoublyLinkedList<T> {
                 aux = aux.getNext();
             }
         }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        CiutadaIterator a = new CiutadaIterator();
+        return a;
     }
 }
