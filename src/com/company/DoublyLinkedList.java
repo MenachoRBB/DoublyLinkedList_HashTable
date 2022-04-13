@@ -161,9 +161,12 @@ public class DoublyLinkedList<T> implements Iterable<T>{
         }
     }
 
+    public Node<T> getFirst(){
+        return head;
+    }
+
     @Override
     public Iterator<T> iterator() {
-        CiutadaIterator a = new CiutadaIterator();
-        return a;
+        return new CiutadaIterator(this);
     }
 }

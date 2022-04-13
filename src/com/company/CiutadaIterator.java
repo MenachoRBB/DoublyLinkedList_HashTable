@@ -1,23 +1,25 @@
 package com.company;
 import java.util.Iterator;
 
-public class CiutadaIterator<T> implements Iterator<T>{
-    private DoublyLinkedList<T> list;
-    private int pos;
+public class CiutadaIterator<T extends Comparable<T>> implements Iterator<T>{
+    private Node<T> current;
 
-    public CiutadaIterator(){
-        pos = 0;
+    public CiutadaIterator(DoublyLinkedList<T> list){
+        this.current = list.getFirst();
     }
 
     @Override
     public boolean hasNext() {
-        return (pos < list.listLength());
+        return current != null;
     }
 
     @Override
     public T next() {
-        DoublyLinkedList<T> elem = list;
-        pos++;
-        return (T) elem;
+        if(this.hasNext()){
+            T data = current.getData();
+            this.current = this.current.getNext();
+            return data;
+        }
+        return null;
     }
 }

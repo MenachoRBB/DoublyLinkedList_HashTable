@@ -19,6 +19,7 @@ public class Main {
         list.addNode(test3);
         list.addNode(test4);
         list.addNode(test5);
+        list.addNode(test6);
         //list.showAll();
 
         Iterator<Ciutada> i =list.iterator();
