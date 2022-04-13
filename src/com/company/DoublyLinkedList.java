@@ -1,7 +1,7 @@
 package com.company;
 import java.util.Iterator;
 
-public class DoublyLinkedList<T> implements Iterable<T>{
+public class DoublyLinkedList<T extends Comparable<T>> implements Iterable<T>{
     private Node<T> tail;
     private Node<T> head;
     private int nElem;
@@ -46,9 +46,7 @@ public class DoublyLinkedList<T> implements Iterable<T>{
             newNode.setNext(head);
             head.setPrev(newNode);
             head = newNode;
-        }else if(pos < 1)
-            throw new PersonalException("Invalid position");
-        else{
+        }else{
             Node<T> temp = head;
             for(int i = 1; i < pos-1; i++) {
                 if (temp != null)
@@ -130,7 +128,6 @@ public class DoublyLinkedList<T> implements Iterable<T>{
         int count = 1;
         Node<T> aux = head;
         if(head == null){
-            count = 0;
             throw new PersonalException("The list is empty");
         }else{
             while(aux != null){
@@ -148,16 +145,10 @@ public class DoublyLinkedList<T> implements Iterable<T>{
     }
 
     //Show all elements from the doubly linked list
-    public void showAll(){
-        Node<T> aux = head;
-        if(head == null)
-            System.out.println("The list is empty");
-        else{
-            System.out.println("List of nodes:");
-            while(aux != null){
-                System.out.println(aux.getData().toString());
-                aux = aux.getNext();
-            }
+    public void showAll(DoublyLinkedList<T> list){
+        Iterator<T> i =list.iterator();
+        while(i.hasNext()){
+            System.out.println(i.next());
         }
     }
 
@@ -167,6 +158,6 @@ public class DoublyLinkedList<T> implements Iterable<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return new CiutadaIterator(this);
+        return new CiutadaIterator<>(this);
     }
 }
