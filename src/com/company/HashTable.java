@@ -1,94 +1,93 @@
 package com.company;
 
-public class HashTable<K extends Comparable<K>, V> {
-    private NodeHash<K,V>[] hashTable;
+import java.util.Arrays;
+
+public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
+    private NodeHash[] hashTable;
     private int nElem;
     private double loadFactor;
 
     //Constructor
-    public HashTable() {
-        this.hashTable = new NodeHash[3];
+    public HashTable(int size) {
+        this.hashTable = new NodeHash[size];
         this.nElem = 0;
         loadFactor = 0.75;
     }
 
-    //Function for adding new values at the hash table
-    public void add(K key, V value) {
-        int index = key.hashCode() % hashTable.length; //Hash function
-
-        if(hashTable[index] == null){   //Empty
-            hashTable[index] = new NodeHash<>(key, value, null);
-            nElem++;
-        }else{  //There's sth in that index
-            NodeHash<K,V> current = this.hashTable[index];
-            while(current != null){
-                if(current.key.compareTo(key) == 0){    //Exists, update the value
-                    current.value = value;
-                    break;
-                }
-                current = current.next;
-            }
-
-            if(current == null){
-                hashTable[index] = new NodeHash<>(key, value, hashTable[index]);
-                nElem++;
-            }
-        }
-    }
-
-    //Function for getting the value of a node by passing the key
-    public V get(K key){
+    //Add function
+    public void add(K key, V value){
         int index = key.hashCode() % hashTable.length;
 
-        if (hashTable[index] != null) {
-            NodeHash<K, V> current = hashTable[index];
-            while (current != null) {
-                if (current.key.compareTo(key) == 0) {
-                    return current.value;
+        if(hashTable[index] == null){
+            hashTable[index] = new NodeHash<>(key, value, null);
+            nElem++;
+        }else{
+            NodeHash temp = hashTable[index];
+            while(temp != null){
+                if(temp.key.compareTo(key) == 0){   //mateixa clau, actualitzem valor
+                    temp.value = value;
+                    break;
                 }
-                current = current.next;
+                if(temp.next == null){
+                    temp.next = new NodeHash<>(key, value, hashTable[index]);
+                    nElem++;
+                }
+                temp = temp.next;
             }
         }
-        return null;
     }
 
-    //Return the number of elements that there are added at the table
-    public int tableLength(){
+    //Function to get the nElems of the hash table
+    public int getnElem(){
         return nElem;
     }
 
-    //Remove the node specified by passing the key
+    //Function to get a value by passing the key
+    public V get(K key){
+        int index = key.hashCode() % hashTable.length;
+
+        if(hashTable[index] == null)
+            return null;
+        else{
+            NodeHash temp = hashTable[index];
+            while(temp != null){
+                if(temp.key.compareTo(key) == 0){
+                    return (V) temp.value;
+                }
+                temp = temp.next;
+            }
+            return null;
+        }
+    }
+
+    //Function to remove a node by passing the key
     public void remove(K key){
         int index = key.hashCode() % hashTable.length;
 
-        if(hashTable[index] == null){   //Empty pos at the table
+        if(hashTable[index] == null){
             return;
         }else{
-            NodeHash<K,V> previous = null;
-            NodeHash<K,V> current = hashTable[index];
+            NodeHash previous = null;
+            NodeHash current = hashTable[index];
 
-            while(current != null){
+            while (current != null){
                 if(current.key.compareTo(key) == 0){
                     if(previous == null){
-                        hashTable[index] = current.next; //Deletes the 1st node of the position
+                        hashTable[index] = current.next;
                     }else{
-                        previous.next = current.next;    //Don't delete the 1st node of the position
+                        previous.next = current.next;
                     }
 
-                    if(hashTable[index] == null){   //There are elements that they have been deleted
-                        this.nElem--;
+                    if(hashTable[index] == null){
+                        nElem--;
                     }
                     return;
-                }//Rearrange the collisions
+                }
                 previous = current;
                 current = current.next;
             }
         }
     }
 
-    //Returns the load factor
-    public float loadFactor(){
-        return nElem/hashTable.length;
-    }
 
 }
