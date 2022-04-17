@@ -33,5 +33,7 @@ public class MainHashTable {
         System.out.println("The value at the index of the key 100 is: "+table.get(55));//It works
 
         System.out.println("The table length is: "+table.tableLength());
+
+        System.out.println("The load factor is: "+table.loadFactor());
     }
 }

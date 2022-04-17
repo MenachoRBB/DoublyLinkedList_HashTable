@@ -64,26 +64,31 @@ public class HashTable<K extends Comparable<K>, V> {
         if(hashTable[index] == null){   //Empty pos at the table
             return;
         }else{
-            NodeHash<K,V> pre = null;
+            NodeHash<K,V> previous = null;
             NodeHash<K,V> current = hashTable[index];
 
             while(current != null){
                 if(current.key.compareTo(key) == 0){
-                    if(pre == null){
+                    if(previous == null){
                         hashTable[index] = current.next; //Deletes the 1st node of the position
                     }else{
-                        pre.next = current.next;    //Don't delete the 1st node of the position
+                        previous.next = current.next;    //Don't delete the 1st node of the position
                     }
 
                     if(hashTable[index] == null){   //There are elements that they have been deleted
-                        nElem--;
+                        this.nElem--;
                     }
                     return;
                 }//Rearrange the collisions
-                pre = current;
+                previous = current;
                 current = current.next;
             }
         }
+    }
+
+    //Returns the load factor
+    public float loadFactor(){
+        return nElem/hashTable.length;
     }
 
 }
