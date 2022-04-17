@@ -16,6 +16,7 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
 
     //Add function
     public void add(K key, V value) throws PersonalException {
+        boolean added = false;
         if (key == null)
             throw new PersonalException("Key is null");
         else if (value == null)
@@ -28,13 +29,13 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
             nElem++;
         } else {
             NodeHash temp = hashTable[index];
-            while (temp != null) {
+            while (temp != null && added == false) {
                 if (temp.key.compareTo(key) == 0) {   //mateixa clau, actualitzem valor
                     temp.value = value;
                     break;
                 }
                 if (temp.next == null) {
-                    temp.next = new NodeHash<>(key, value, hashTable[index]);
+                    temp.next = new NodeHash<>(key, value, null);
                     nElem++;
                 }
                 temp = temp.next;
@@ -96,29 +97,64 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
     }
 
     //Function that check if an element is at the table
-    int search(K key) {
-        int i = 0;
-        int count = 0;
-        for (i = 0; i < hashTable.length; i++) {
+    public int search(K key) throws PersonalException{
+        int count = 1;
+        int index = key.hashCode() % hashTable.length;
+
+        if(hashTable[index] == null){
+            throw new PersonalException("Empty table");
+        }else{
+            NodeHash temp = hashTable[index];
+            while (temp != null) {
+                if (temp.key.compareTo(key) == 0) {
+                    return count;
+                }
+                temp = temp.next;
+                count++;
+            }
+        }
+        return count;
+    }
+
+    //Function that returns a doubly linked list with the values of the elements of the table
+    public DoublyLinkedList<V> getValues(){
+        DoublyLinkedList<V> temp = new DoublyLinkedList<V>();
+
+        for(int i = 0; i < hashTable.length; i++){
             if(hashTable[i] != null){
-                while (hashTable[i] != null){
-                    System.out.println("The value of the node is: "+hashTable[i].value);
-                    if(hashTable[i].key.compareTo(key) != 0){
-                        count++;
-                    }else{
-                        return count+1;
-                    }
-                    hashTable[i] = hashTable[i].next;
+                temp.addNode((V) hashTable[i].value);
+                NodeHash current = hashTable[i];
+                while(current.next!=null){
+                    temp.addNode((V) current.next.value);
+                    current = current.next;
                 }
             }
         }
-        return count+1;
+        return temp;
     }
+
+    public DoublyLinkedList<K> getKeys(){
+        DoublyLinkedList<K> temp = new DoublyLinkedList<K>();
+
+        for(int i = 0; i < hashTable.length; i++){
+            if(hashTable[i] != null){
+                temp.addNode((K) hashTable[i].key);
+                NodeHash current = hashTable[i];
+                while(current.next!=null){
+                    temp.addNode((K) current.next.key);
+                    current = current.next;
+                }
+            }
+        }
+        return temp;
+    }
+
 
 
     //Function that returns the load factor
     double loadFactor(){
-        return hashTable.length/nElem;
+        return (double)nElem/hashTable.length;
+
     }
 
 
