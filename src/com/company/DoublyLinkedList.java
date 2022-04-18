@@ -131,11 +131,9 @@ public class DoublyLinkedList<T extends Comparable<T>> implements Iterable<T>{
             throw new PersonalException("The list is empty");
         }else{
             while(aux != null){
-                if(aux.getData() == data){
+                if(aux.getData() == data) {
                     return count;
-                }else if(count == nElem)
-                    throw new PersonalException("Node with the given data not found");
-                else{
+                }else{
                     count++;
                     aux = aux.getNext();
                 }

@@ -1,17 +1,22 @@
 package com.company;
 
-import java.util.Arrays;
 
 public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
     private NodeHash[] hashTable;
     private int nElem;
     private double loadFactor;
+    public int size;
 
     //Constructor
     public HashTable(int size) {
         this.hashTable = new NodeHash[size];
         this.nElem = 0;
         loadFactor = 0.75;
+        this.size = size;
+    }
+
+    public int getSize(){
+        return size;
     }
 
     //Add function
@@ -22,7 +27,7 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
         else if (value == null)
             throw new PersonalException("Null value");
 
-        int index = hashFunction((String) key) % hashTable.length;
+        int index = hashFunction(key) % hashTable.length;
 
         if (hashTable[index] == null) {
             hashTable[index] = new NodeHash<>(key, value, null);
@@ -45,7 +50,7 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
 
     //Function to get a value by passing the key
     public V get(K key) throws PersonalException{
-        int index = hashFunction((String) key) % hashTable.length;
+        int index = hashFunction(key) % hashTable.length;
 
         if(key == null)
             throw new PersonalException("Null key");
@@ -71,7 +76,7 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
 
     //Function to remove a node by passing the key
     public void remove(K key) throws PersonalException{
-        int index = hashFunction((String) key) % hashTable.length;
+        int index = hashFunction(key) % hashTable.length;
 
         if(key == null)
             throw new PersonalException("Null key");
@@ -102,7 +107,7 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
     //Function that check if an element is at the table
     public int search(K key) throws PersonalException{
         int count = 1;
-        int index = hashFunction((String) key) % hashTable.length;
+        int index = hashFunction(key) % hashTable.length;
 
         if(key == null)
             throw new PersonalException("Null key");
@@ -162,11 +167,11 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
     }
 
     //Hash function
-    public int hashFunction(String key){
-        int k = key.length();
+    public int hashFunction(K key){
+        int k = key.toString().length();
         int sum = 0;
         for(int i = 0; i < k-1; i++)
-            sum += key.charAt(i)<<(5*i);    //desplaça bits del operand cap a l'esquerra les posicions indicades
+            sum += key.toString().charAt(i)<<(5*i);    //desplaça bits del operand cap a l'esquerra les posicions indicades
         return Math.abs(sum);
     }
 

@@ -28,6 +28,4 @@ public class Node<T> {
     public void setPrev(Node<T> n){
         prev = n;
     }
-
-
 }
