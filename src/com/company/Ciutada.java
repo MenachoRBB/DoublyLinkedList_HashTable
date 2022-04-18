@@ -21,4 +21,8 @@ public class Ciutada implements Comparable<Ciutada>{
         else
             return -1;
     }
+
+    public String getDni(){
+        return dni;
+    }
 }

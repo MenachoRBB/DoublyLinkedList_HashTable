@@ -18,11 +18,11 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
     public void add(K key, V value) throws PersonalException {
         boolean added = false;
         if (key == null)
-            throw new PersonalException("Key is null");
+            throw new PersonalException("Null key");
         else if (value == null)
-            throw new PersonalException("Value is null");
+            throw new PersonalException("Null value");
 
-        int index = key.hashCode() % hashTable.length;
+        int index = hashFunction((String) key) % hashTable.length;
 
         if (hashTable[index] == null) {
             hashTable[index] = new NodeHash<>(key, value, null);
@@ -44,9 +44,11 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
     }
 
     //Function to get a value by passing the key
-    public V get(K key) {
-        int index = key.hashCode() % hashTable.length;
+    public V get(K key) throws PersonalException{
+        int index = hashFunction((String) key) % hashTable.length;
 
+        if(key == null)
+            throw new PersonalException("Null key");
         if (hashTable[index] == null)
             return null;
         else {
@@ -68,8 +70,11 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
 
 
     //Function to remove a node by passing the key
-    public void remove(K key) {
-        int index = key.hashCode() % hashTable.length;
+    public void remove(K key) throws PersonalException{
+        int index = hashFunction((String) key) % hashTable.length;
+
+        if(key == null)
+            throw new PersonalException("Null key");
 
         if (hashTable[index] == null) {
             return;
@@ -85,9 +90,7 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
                         previous.next = current.next;
                     }
 
-                    if (hashTable[index] == null) {
-                        nElem--;
-                    }
+                    nElem--;
                     return;
                 }
                 previous = current;
@@ -99,7 +102,10 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
     //Function that check if an element is at the table
     public int search(K key) throws PersonalException{
         int count = 1;
-        int index = key.hashCode() % hashTable.length;
+        int index = hashFunction((String) key) % hashTable.length;
+
+        if(key == null)
+            throw new PersonalException("Null key");
 
         if(hashTable[index] == null){
             throw new PersonalException("Empty table");
@@ -149,13 +155,22 @@ public class HashTable<K extends Comparable<K>, V extends Comparable<V>> {
         return temp;
     }
 
-
-
     //Function that returns the load factor
     double loadFactor(){
         return (double)nElem/hashTable.length;
 
     }
+
+    //Hash function
+    public int hashFunction(String key){
+        int k = key.length();
+        int sum = 0;
+        for(int i = 0; i < k-1; i++)
+            sum += key.charAt(i)<<(5*i);    //desplaça bits del operand cap a l'esquerra les posicions indicades
+        return Math.abs(sum);
+    }
+
+
 
 
 }
